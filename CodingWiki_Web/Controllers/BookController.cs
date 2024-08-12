@@ -69,6 +69,42 @@ namespace CodingWiki_Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public IActionResult Details(int? id)
+        {
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+
+            BookDetail obj = new();
+
+            obj.Book = _db.Books.FirstOrDefault(u => u.Book_Id == id);
+            obj = _db.BookDetails.FirstOrDefault(u => u.Book_Id == id);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Details(BookDetail obj)
+        {
+            if (obj.BookDetail_Id == 0)
+            {
+                //create
+                await _db.BookDetails.AddAsync(obj);
+            }
+            else
+            {
+                //update
+                _db.BookDetails.Update(obj);
+            }
+            await _db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             Book obj = new();
