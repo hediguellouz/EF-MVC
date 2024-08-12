@@ -118,5 +118,37 @@ namespace CodingWiki_Web.Controllers
             await _db.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> PlayGround()
+        {
+            IEnumerable<Book> BookList1 = _db.Books;
+            var FiltereBook1 = BookList1.Where(b => b.Price > 50).ToList();
+
+            IQueryable<Book> BookList2 = _db.Books;
+            var FiltereBook2 = BookList1.Where(b => b.Price > 50).ToList();
+
+            //var bookTemp = _db.Books.FirstOrDefault();
+            //bookTemp.Price = 100;
+
+            //var bookCollection = _db.Books;
+            //decimal totalPrice = 0;
+
+            //foreach (var book in bookCollection)
+            //{
+            //    totalPrice += book.Price;
+            //}
+
+            //var bookList = _db.Books.ToList();
+            //foreach (var book in bookList)
+            //{
+            //    totalPrice += book.Price;
+            //}
+
+            //var bookCollection2 = _db.Books;
+            //var bookCount1 = bookCollection2.Count();
+
+            //var bookCount2 = _db.Books.Count();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
